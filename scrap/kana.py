@@ -7,7 +7,7 @@ import locale
 locale.setlocale(locale.LC_TIME,'')
 
 domain = 'https://www.kana.fr'
-url = 'https://www.kana.fr/wp-admin/admin-ajax.php?action=do_ajax&fn=ajax_get_planning&startDate=201905&nbMonth=12'
+url = 'https://www.kana.fr/wp-admin/admin-ajax.php?action=do_ajax&fn=ajax_get_planning&startDate=201905&nbMonth=3'
 res = []
 while True:
     data = requests.get(url)
@@ -16,7 +16,7 @@ while True:
     if not timeline:
         break
     for item in timeline:
-        var = {'name': (item.find('h3').a.string + item.find('div', 'sub').string),
+        var = {'name': str("%s - %s" % (item.find('h3').a.string, item.find('div', 'sub').string)).replace('\xa0', ' '),
                'date': datetime.strptime(item.find('div', 'date').string, '%d %B %Y'),
                'link': item.find('a').attrs['href']
                }

@@ -15,7 +15,7 @@ while True:
         break
     for item in timeline:
         var = {'name': item.find('h2', 'mangatitle').find('span').string + item.find('h2', 'mangatitle').find_all('span')[1].string,
-               'date': datetime.strptime(item.find('span', 'manga_date').string, '%d/%m/%y'),
+               'date': datetime.strptime(item.find('span', 'manga_date').string, '%d/%m/%y').strftime('%d/%m/%Y'),
                'link': domain + item.find('a').attrs['href']
                }
         res.append(var)
@@ -24,5 +24,3 @@ while True:
         url = domain + nextpage[0].attrs['href']
     else:
         break
-for item in res:
-    print("%s\n" % item)
