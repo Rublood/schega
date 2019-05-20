@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import xmltodict
 from bs4 import BeautifulSoup
@@ -11,6 +12,7 @@ while True:
     html = BeautifulSoup(data.text, 'html.parser')
     timeline = html.select("#block-views-facettes-block-4 > div > div > div.view-content > div.views-row")
     # timeline = html.select('div.container div.row div.content > div.view > div.view-content > div.views-row')
+    print(timeline)
     for item in timeline:
         # for string in item.stripped_strings:
         #     print(string)
@@ -20,11 +22,11 @@ while True:
                'author': item.find('ul').a.string
                }
         res.append(var)
-    nextpage = html.select(
-        "#block-views-facettes-block-4 > div > div > table > tbody > tr > td.pagerer.pagerer-center > div > div > ul > li.pager-next.active > a")
+    nextpage = html.select("#block-views-facettes-block-4 > div > div > table > tbody > tr > td.pagerer.pagerer-center > div > div > ul > li.pager-next.active > a")
     if nextpage:
         nextpage = nextpage[0].attrs['href']
         url = domain + nextpage
     else:
         break
-print(res)
+for item in res:
+    print("%s\n" % item)
