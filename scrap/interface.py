@@ -1,0 +1,3 @@
+
+class InterfaceScrap:
+    url = False
