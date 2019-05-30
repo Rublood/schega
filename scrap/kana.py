@@ -1,30 +1,21 @@
 # -*- coding: utf-8 -*-
-import requests
-import xmltodict
-from bs4 import BeautifulSoup
 from datetime import datetime
 import locale
+from scrap.interface import InterfaceScrap
 locale.setlocale(locale.LC_TIME,'')
 
-domain = 'https://www.kana.fr'
-url = 'https://www.kana.fr/wp-admin/admin-ajax.php?action=do_ajax&fn=ajax_get_planning&startDate=201905&nbMonth=3'
-res = []
-while True:
-    data = requests.get(url)
-    html = BeautifulSoup(data.text, 'html.parser')
-    timeline = html.select("div.item.support_manga")
-    if not timeline:
-        break
-    for item in timeline:
+
+class Kana(InterfaceScrap):
+    domain = 'https://www.kana.fr'
+    url = domain + '/wp-admin/admin-ajax.php?action=do_ajax&fn=ajax_get_planning&startDate=201905&nbMonth=3'
+
+    def get_items(self):
+        return self.html.select("div.item.support_manga")
+
+    def add_item(self, item):
         var = {'name': str("%s - %s" % (item.find('h3').a.string, item.find('div', 'sub').string)).replace('\xa0', ' '),
-               'date': datetime.strptime(item.find('div', 'date').string, '%d %B %Y'),
-               'link': item.find('a').attrs['href']
+               'date': datetime.strptime(item.find('div', 'date').string, '%d %B %Y').strftime("%d/%m/%Y"),
+               'link': item.find('a').attrs['href'],
+               'editor': 'kana'
                }
-        res.append(var)
-    nextpage = False
-    if nextpage:
-        url = domain + nextpage[0].attrs['href']
-    else:
-        break
-for item in res:
-    print("%s\n" % item)
+        self.res.append(var)
