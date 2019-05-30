@@ -3,22 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def group_by(dict_list, key):
-    res = dict()
-    for item in dict_list:
-        if not res.get(item[key]):
-            res[item[key]] = []
-        res[item[key]].append(item)
-    return res
-
-
-def print_data(dict_list):
-    grouped_by = group_by(dict_list, 'date')
-    for date in grouped_by:
-        for item in grouped_by[date]:
-            print("%s\n" % item)
-
-
 class InterfaceScrap:
     domain = False
     url = False

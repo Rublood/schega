@@ -18,4 +18,5 @@ class Kana(InterfaceScrap):
                'link': item.find('a').attrs['href'],
                'editor': 'kana'
                }
-        self.res.append(var)
+        if "Agenda" not in var['name']:
+            self.res.append(var)
