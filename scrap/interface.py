@@ -28,6 +28,7 @@ class InterfaceScrap:
             else:
                 break
         # self.print_data()
+        print(self.res)
         return self.res
 
     def get_data(self):
