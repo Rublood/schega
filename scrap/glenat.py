@@ -4,9 +4,8 @@ from datetime import datetime
 
 
 class Glenat(InterfaceScrap):
-    domain = 'https://www.glenat.com'
-    url = domain + '/manga/a-paraitre'
-    res = []
+    def __init__(self, **kwargs):
+        super(Glenat, self).__init__(domain='https://www.glenat.com', url='https://www.glenat.com/manga/a-paraitre')
 
     def get_items(self):
         return self.html.select("#block-views-facettes-block-4 > div > div > div.view-content > div.views-row")

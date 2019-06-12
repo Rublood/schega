@@ -4,16 +4,15 @@ from bs4 import BeautifulSoup
 
 
 class InterfaceScrap:
-    domain = False
-    url = False
-    res = []
-    html = False
-    nextpage = False
-    timeline = False
-    stop_loop = False
-
     def __init__(self, **kwargs):
-        super(InterfaceScrap, self)
+        self.domain = kwargs.pop('domain', False)
+        self.url = kwargs.pop('url', False)
+        self.res = []
+        self.html = kwargs.pop('html', False)
+        self.nextpage = kwargs.pop('nextpage', False)
+        self.timeline = kwargs.pop('timeline', False)
+        self.stop_loop = kwargs.pop('stop_loop', False)
+        super(InterfaceScrap, self).__init__(**kwargs)
         self.core()
 
     def core(self):
